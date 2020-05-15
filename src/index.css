@@ -13,17 +13,27 @@ code {
 }
 
 .neck{
-  background-color: brown;
+  font-family: "Concert One", "Consolas";
   display: flex;
-  font-family: "Consolas";
-  box-shadow: 0px 0px 5px black;
+  flex-flow: wrap;
+  width: fit-content;
+  max-width: 100%;
+  overflow: hidden;overflow-x: scroll;
+  padding: 5px 15px;
 }
- .neck .fret{
-   border-right: 0.1px solid gray;
+ .neck .fret{background-color: gray;
+  border-bottom: 3px solid black;
+  margin-bottom: 10px;
+  border-top: 1px solid black;
+  box-shadow: 0px 0px 3px black;
+}
+ .neck .fret:last-child{
+  border-right: none;
  }
 
  .neck .fret:first-child{
-   border-left: 10px solid black;
+  border-left: 10px solid black;
+  margin-left: -10px;
  }
 
  .neck .fret .string{
@@ -38,7 +48,7 @@ code {
   left: 0px;
   width: 100%;
   height: 0px;
-  border-bottom: black solid 1px;
+  border-bottom: silver solid 2px;
   transition: transform(-50%, 0%);
 }
 
@@ -54,16 +64,46 @@ code {
   cursor: pointer;
   transition-property: background-color, box-shadow;
   transition-duration:  0.2s;
+  z-index: 1;
+  position: relative;
+  padding-bottom: 1px;
 }
+
 .neck .fret .string:hover .dot{
   background-color: grey;
-  box-shadow: 0px 0px 5px 2px rgba(0,0,0,0.6);
+  box-shadow: 0px 0px 3px 1px rgba(0,0,0, 0.4);
 }
+.neck .fret .string:hover .dot:focus{
+  background-color: inherit;
+}
+
 .neck .fret .string:hover .dotSet{
   background-color: black;
 }
 
 .neck .fret .string .dotSet{
   background-color: black;
-  box-shadow: 0px 0px 5px 2px rgba(0,0,0,0.6);
+  box-shadow: 0px 0px 3px 1px rgba(0,0,0, 0.9);
 }
+
+  /* ------------------------------ */
+  /*          SCROLLBAR             */
+  /* ------------------------------ */
+  /* width */
+::-webkit-scrollbar {
+  width: 1px;
+}
+
+  /* track */
+  ::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+  /* handle */
+  ::-webkit-scrollbar-thumb {
+    background-color: rgba(0,0,0, 0.8);
+    border-radius: 20px;
+  }
+  /* handle hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0,0,0, 0.3);
+  }

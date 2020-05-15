@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom'
 class Navbar extends Component {
     render() {
         return (
-            <nav className='nav-wrapper blue darken-3'>
+            <nav className='nav-wrapper grey darken-3'>
                 <div className='container'>
                     <a href='./' className='brand-logo center'>GuitarNeck</a>
                     <ul className='right'>

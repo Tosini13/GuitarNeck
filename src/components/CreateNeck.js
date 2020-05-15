@@ -1,32 +1,49 @@
 import React, { Component } from "react";
 import Fret from './Fret'
+import { connect } from "react-redux";
 
-class Create extends Component {
+class Neck extends Component {
 
-    chordas = ['E', 'A', 'D', 'g', 'h', 'e'];
+    chordas = ['e', 'h', 'g', 'D', 'A', 'E'];
+
+
+    createTitle() {
+        if (this.props.song === undefined) {
+            return '';
+        } else {
+            return this.props.song.title;
+        }
+    }
 
     createNeck() {
-        // let chordas = ['E', 'A', 'D', 'g', 'h', 'e'];
-        let neck = {};
-        for (let i = 1; i < 4; i++) { //first 3 frets
-            // neck[i].id = i;
-            neck[i] = {};
-            for (let chorda of this.chordas) {
-                neck[i][chorda] = null;
+        if (this.props.song === undefined) {
+            let neck = [];
+            for (let i = 1; i < 4; i++) { //first 3 frets
+                neck[i] = {};
+                for (let chorda of this.chordas) {
+                    neck[i][chorda] = null;
+                }
             }
+            // let song = {
+            //     title: '',
+            //     neck: neck
+            // }
+            // return song;
+            return neck;
+        } else {
+            return this.props.song.neck;
         }
-        return neck;
     }
 
     state = {
-        title: '',
+        title: this.createTitle(),
         neck: this.createNeck()
     }
 
     addDot = (fret, string) => {
         let neck = this.state.neck;
         let dot = neck[fret][string];
-        if (isNaN(dot)) {
+        if (dot === null) {
             dot = 0;
         } else {
             dot++;
@@ -45,16 +62,33 @@ class Create extends Component {
         });
     }
 
+    deleteDot = (fret, string) => {
+        let neck = this.state.neck;
+        neck[fret][string] = null;
+
+        this.setState({
+            neck
+        });
+    }
+
+    componentDidUpdate(){
+        console.log('updated');
+    }
+
+    componentWillUnmount(){
+        console.log('will unmounte');
+    }
+
     render() {
         const neck = Object.keys(this.state.neck).map((key) => {
             return (
-                <Fret fret={this.state.neck[key]} fretNo={key} addDot={this.addDot} />
+                <Fret fret={this.state.neck[key]} fretNo={key} key={key} addDot={this.addDot} deleteDot={this.deleteDot} />
             )
         });
         return (
             <div className='container'>
                 <h2 className='center'>Create Neck:</h2>
-                <input className='center' type='text' id='title' placeholder='Neck title'></input>
+                <input className='center' type='text' id='title' placeholder='Neck title' onChange={(e) => { this.setState({ title: e.target.value }); }} value={this.state.title}></input>
                 <div className='neck'>
                     {neck}
                 </div>
@@ -63,4 +97,11 @@ class Create extends Component {
     }
 }
 
-export default Create;
+const mapStatetoProps = (state, ownProps) => {
+    let id = ownProps.match.params.neck_id;
+    return {
+        song: state.songs.find(song => parseInt(song.id) === parseInt(id))
+    }
+}
+
+export default connect(mapStatetoProps)(Neck);

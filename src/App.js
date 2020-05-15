@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Route, BrowserRouter, Switch } from 'react-router-dom';
 import Home from './components/Home'
 import Navbar from './components/Navbar'
-import Create from './components/CreateNeck'
+import Neck from './components/CreateNeck'
 
 
 
@@ -14,7 +14,7 @@ class App extends Component {
           <Navbar />
           <Switch>
             <Route exact path='/' component={Home} />
-            <Route path='/Create' component={Create} />
+            <Route path='/:neck_id' component={Neck} />
           </Switch>
         </div>
       </BrowserRouter>
